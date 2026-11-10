@@ -1,0 +1,14 @@
+{
+  "name": "pit-wall",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PIT WALL — démo privée Formula 1 2026",
+  "scripts": {
+    "start": "http-server . -p 8010 -c-1",
+    "test": "node tests/check-site.js"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "playwright": "^1.65.0"
+  }
+}

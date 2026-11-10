@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PIT WALL — Formula 1 2026</title>
+<meta name="description" content="PIT WALL — projet de démonstration privé : écuries, pilotes, circuits et voiture 3D de la saison de Formule 1 2026.">
+<meta name="theme-color" content="#07080a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2307080a'/%3E%3Cpath d='M4 22L12 8h4l-8 14zM14 22l8-14h4l-8 14z' fill='%23e10600'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;700;900&family=Titillium+Web:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<script>try{if(sessionStorage.getItem("pwT"))document.documentElement.classList.add("arriving")}catch(e){}</script>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/home.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="is-loading" data-page="home">
+
+<!-- Chargement -->
+<div id="loader" aria-hidden="true">
+  <div class="ld-lights"><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="ld-word">PIT WALL</div>
+  <div class="ld-count"><b id="ldNum">000</b> %</div>
+</div>
+
+<main>
+<!-- ═════ HERO 3D ═════ -->
+<section id="hero" class="hero">
+  <div class="stage">
+    <canvas id="scene" aria-label="Voiture de Formule 1 en 3D — glissez pour la faire tourner"></canvas>
+    <div class="speed" aria-hidden="true"></div>
+    <div class="carbon-edge" aria-hidden="true"></div>
+
+    <div class="hud-title" id="hudTitle">
+      <p class="kicker"><i></i>Saison 2026 · <span id="roundInfo">Formula 1</span></p>
+      <h1><span class="o">PIT</span> WALL</h1>
+      <p class="lede">Écuries, pilotes, circuits — le muret des stands, en 3D.</p>
+    </div>
+
+    <div class="angle a-front" data-i="0">
+      <span class="num">01</span><h2>Face<br>avant</h2>
+      <p>Aileron à plusieurs éléments, pneus exposés, halo : tout ce qui coupe l'air en premier. En 2026, l'aéro active ouvre et ferme ses volets pour gagner en vitesse de pointe.</p>
+      <dl><div><dt>Largeur</dt><dd>1,90 m</dd></div><div><dt>Masse mini</dt><dd>768 kg</dd></div></dl>
+    </div>
+    <div class="angle a-side" data-i="1">
+      <span class="num">02</span><h2>Profil</h2>
+      <p>Empattement, pontons, capot moteur : la silhouette qui définit chaque livrée. Cliquez sur une écurie ci-dessous pour changer de couleurs en direct.</p>
+      <dl><div><dt>Empattement</dt><dd>≤ 3,40 m</dd></div><div><dt>Groupe propulseur</dt><dd>V6 hybride</dd></div></dl>
+    </div>
+    <div class="angle a-top" data-i="2">
+      <span class="num">03</span><h2>Vue<br>du dessus</h2>
+      <p>De l'aileron arrière au museau : la voiture se dévoile dans toute sa longueur, du fond plat aux roues arrière plus larges.</p>
+    </div>
+
+    <div class="selector" id="selector">
+      <div class="sel-head"><span class="lbl">Livrée</span><b id="selName">McLaren</b><span id="selNums" class="nums"></span></div>
+      <div class="chips" id="chips" role="listbox" aria-label="Choisir une écurie"></div>
+    </div>
+
+    <div class="tools">
+      <button id="zIn" aria-label="Zoom avant" data-hover>+</button>
+      <button id="zOut" aria-label="Zoom arrière" data-hover>−</button>
+    </div>
+    <div class="drag-hint" id="dragHint"><i></i> Glissez pour tourner <em>· Ctrl + molette : zoom</em></div>
+    <div class="scroll-cue"><span>Défiler</span><i></i></div>
+    <div class="progress"><i id="heroBar"></i></div>
+  </div>
+</section>
+
+<!-- ═════ PROCHAINE COURSE ═════ -->
+<section id="next" class="next">
+  <div class="next-bg"><div class="reveal" id="nextBg"></div></div>
+  <div class="wrap">
+    <p class="kicker"><i></i><span id="nextKicker">Prochaine course</span></p>
+    <h2 id="nextGp" class="big">—</h2>
+    <p class="muted" id="nextPlace"></p>
+    <div class="count" id="count" aria-live="off">
+      <div><b data-u="d">00</b><span>jours</span></div>
+      <div><b data-u="h">00</b><span>heures</span></div>
+      <div><b data-u="m">00</b><span>minutes</span></div>
+      <div><b data-u="s">00</b><span>secondes</span></div>
+    </div>
+    <p class="note" id="nextNote"></p>
+  </div>
+</section>
+
+<!-- ═════ CHIFFRES ═════ -->
+<section class="stats wrap">
+  <div><b data-n="11">0</b><span>écuries</span></div>
+  <div><b data-n="22">0</b><span>pilotes</span></div>
+  <div><b data-n="23">0</b><span>Grands Prix</span></div>
+  <div><b data-n="6">0</b><span>week-ends sprint</span></div>
+</section>
+
+<!-- ═════ ÉCURIES ═════ -->
+<section class="teams-strip">
+  <div class="wrap row-head"><h2 class="big">Les écuries</h2><a href="teams.html" class="more" data-hover>Tout voir →</a></div>
+  <div class="strip" id="strip"></div>
+</section>
+
+<!-- ═════ PILOTES ═════ -->
+<section class="drivers-wall">
+  <div class="wrap row-head"><h2 class="big">La grille</h2><a href="drivers.html" class="more" data-hover>Tous les pilotes →</a></div>
+  <div class="marquee" id="mq1"></div>
+  <div class="marquee rev" id="mq2"></div>
+</section>
+
+<!-- ═════ CIRCUITS ═════ -->
+<section class="circuits-teaser">
+  <div class="wrap row-head"><h2 class="big">Fin de saison</h2><a href="circuits.html" class="more" data-hover>Calendrier →</a></div>
+  <div class="wrap ct-grid" id="ctGrid"></div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-big">PIT WALL</div>
+    <p>Projet de démonstration privé, non officiel et non affilié à la Formula 1, à la FIA ni aux écuries. Marques et logos appartiennent à leurs propriétaires.</p>
+    <p>Photos : Wikimedia Commons — auteurs et licences dans <code>assets/img/attribution.json</code>.</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/manifest.js"></script>
+<script src="js/common.js"></script>
+<script type="module" src="js/home.js"></script>
+</body>
+</html>
